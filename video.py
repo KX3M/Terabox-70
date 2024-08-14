@@ -101,7 +101,7 @@ async def upload_video(client, file_path, thumbnail_path, video_title, reply_msg
         collection_message = await client.send_video(
             chat_id=collection_channel_id,
             video=file,
-            caption=f"✨ {video_title}\n👤 ʟᴇᴇᴄʜᴇᴅ ʙʏ : {user_mention}\n📥 ᴜsᴇʀ ʟɪɴᴋ: tg://user?id={user_id}",
+            caption=f"✨ {video_title}\n👤 ʟᴇᴇᴄʜᴇᴅ ʙʏ : {user_mention}\n⚡ ᴅᴇᴠʟᴏᴘᴇʀ : <a href=https://t.me/HateXfree>ᯓ ʜᴀᴛᴇ ғʀᴇᴇ ᡣ𐭩</a>",
             thumb=thumbnail_path,
             progress=progress
         )
@@ -112,7 +112,7 @@ async def upload_video(client, file_path, thumbnail_path, video_title, reply_msg
         )
         await asyncio.sleep(1)
         await message.delete()
-        await message.reply_sticker("CAACAgIAAxkBAAEZdwRmJhCNfFRnXwR_lVKU1L9F3qzbtAAC4gUAAj-VzApzZV-v3phk4DQE")
+        await message.reply_sticker("CAACAgUAAxkBAAK9l2a8Y8VshBZCfFtR__wxAUWpBgOXAAKbAAPIlGQUmqlsx6XTYLc1BA")
 
     await reply_msg.delete()
 
