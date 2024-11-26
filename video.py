@@ -15,7 +15,7 @@ aria2 = aria2p.API(
     )
 )
 async def download_video(url, reply_msg, user_mention, user_id):
-    response = requests.get(f"https://ashlynn.serv00.net/tera.php/?url={url}")
+    response = requests.get(f"https://opabhik.serv00.net/Watch.php?url={url}")
     response.raise_for_status()
     data = response.json()
 
