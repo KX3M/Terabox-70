@@ -190,4 +190,4 @@ async def upload_video(client, video_stream, thumbnail_path, video_title, reply_
         logging.error(f"Upload failed: {e}")
         await reply_msg.edit_text("❌ Upload failed. Please try again later.\nJoin > @PythonBotz")
         return None
-v
+
