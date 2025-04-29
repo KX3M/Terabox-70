@@ -48,8 +48,9 @@ app = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
 @app.on_message(filters.command("start"))
 async def start_command(client, message):
-    sticker_message = await message.reply_sticker("CAACAgUAAxkBAAK9lWa8Y0uME7AZ-54HcY3O48EFNaFJAAIVAQACyJRkFGZEMKKnFWwTNQQ")
-    await asyncio.sleep(2)
+        # Send sticker and delete it after 2 seconds
+    sticker_message = await message.reply_sticker("CAACAgUAAxkBAAEBOXZoBYCpfeN2Rbizyqbu-kar74BhRwACAhEAAkJImFV7G0RPtzk6KDYE")
+    await asyncio.sleep(1.8)
     await sticker_message.delete()
     user_mention = message.from_user.mention
     reply_message = f"ᴡᴇʟᴄᴏᴍᴇ, {user_mention}.\n\n🌟 ɪ ᴀᴍ ᴀ ᴛᴇʀᴀʙᴏx ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ʙᴏᴛ. sᴇɴᴅ ᴍᴇ ᴀɴʏ ᴛᴇʀᴀʙᴏx ʟɪɴᴋ ɪ ᴡɪʟʟ ᴅᴏᴡɴʟᴏᴀᴅ ᴡɪᴛʜɪɴ ғᴇᴡ sᴇᴄᴏɴᴅs ᴀɴᴅ sᴇɴᴅ ɪᴛ ᴛᴏ ʏᴏᴜ ✨."
