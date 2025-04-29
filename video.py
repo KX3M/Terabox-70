@@ -1,5 +1,6 @@
 import requests
 import aria2p
+import time
 from datetime import datetime
 from status import format_progress_bar
 import asyncio
@@ -87,8 +88,8 @@ async def download_video(url, reply_msg, user_mention, user_id):
             await asyncio.sleep(2)
 
         if download.is_complete:
-            # No file path saving, just return the stream
-            video_stream = download.files[0].stream
+            # Instead of trying to access 'stream', get the file path
+            file_path = download.files[0].path
             thumbnail_path = None
 
             if thumbnail_url:
@@ -103,7 +104,7 @@ async def download_video(url, reply_msg, user_mention, user_id):
 
             await reply_msg.edit_text("Uploading...")
 
-            return video_stream, thumbnail_path, file_name
+            return file_path, thumbnail_path, file_name
 
     except Exception as e:
         logging.error(f"Error during download: {e}")
@@ -117,7 +118,7 @@ async def download_video(url, reply_msg, user_mention, user_id):
 
 
 # Upload video function
-async def upload_video(client, video_stream, thumbnail_path, video_title, reply_msg, collection_channel_id, user_mention, user_id, message):
+async def upload_video(client, video_path, thumbnail_path, video_title, reply_msg, collection_channel_id, user_mention, user_id, message):
     try:
         uploaded = 0
         start_time = datetime.now()
@@ -159,7 +160,7 @@ async def upload_video(client, video_stream, thumbnail_path, video_title, reply_
         # Upload the video to the collection channel
         collection_message = await client.send_video(
             chat_id=collection_channel_id,
-            video=video_stream,
+            video=video_path,
             caption=f"✨ {video_title}\n👤 Leech by: {user_mention}\n📥 User link: @PythonBotz",
             thumb=thumbnail_path,
             progress=progress
@@ -190,4 +191,4 @@ async def upload_video(client, video_stream, thumbnail_path, video_title, reply_
         logging.error(f"Upload failed: {e}")
         await reply_msg.edit_text("❌ Upload failed. Please try again later.\nJoin > @PythonBotz")
         return None
-
+        
