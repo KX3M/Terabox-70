@@ -7,6 +7,23 @@ import os, time
 import logging
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+# List of Terabox-like domains to normalize
+TERABOX_DOMAINS = [
+    'terabox.com', 'nephobox.com', '4funbox.com', 'mirrobox.com',
+    'momerybox.com', 'teraboxapp.com', '1024tera.com',
+    'terabox.app', 'gibibox.com', 'goaibox.com', 'terasharelink.com',
+    'teraboxlink.com', 'terafileshare.com'
+]
+
+# Normalizes URLs to standard terabox.com/s/ format
+def normalize_terabox_url(url):
+    for domain in TERABOX_DOMAINS:
+        if domain in url:
+            parts = url.split('/s/')
+            if len(parts) > 1:
+                return f"https://terabox.com/s/{parts[1]}"
+    return url
+
 aria2 = aria2p.API(
     aria2p.Client(
         host="http://localhost",
@@ -19,34 +36,12 @@ options = {
     "retry-wait": "3",
     "continue": "true"
 }
-
 aria2.set_global_options(options)
 
-# Function to modify the URL if needed
-def modify_url_if_needed(url):
-    # List of domains to check for
-    domains_to_replace = [
-        'terabox.com', 'nephobox.com', '4funbox.com', 'mirrobox.com', 
-        'momerybox.com', 'teraboxapp.com', '1024tera.com', 
-        'terabox.app', 'gibibox.com', 'goaibox.com', 'terasharelink.com', 
-        'teraboxlink.com', 'terafileshare.com'
-    ]
-
-    # Check if the URL contains any of the above domains and replace it
-    for domain in domains_to_replace:
-        if domain in url:
-            # Replace the domain part with https://terabox.com/s/
-            modified_url = url.replace(f'://{domain}/s/', '://terabox.com/s/')
-            return modified_url
-
-    # If no replacement is needed, return the original URL
-    return url
-
 async def download_video(url, reply_msg, user_mention, user_id):
-    # Modify the URL if needed
-    modified_url = modify_url_if_needed(url)
+    url = normalize_terabox_url(url)
 
-    response = requests.get(f"http://178.62.122.48:6999/?url={modified_url}")
+    response = requests.get(f"http://178.62.122.48:6999/?url={url}")
     response.raise_for_status()
     data = response.json()
 
@@ -183,4 +178,4 @@ async def upload_video(client, file_path, thumbnail_path, video_title, reply_msg
         logging.error(f"Upload failed: {e}")
         await reply_msg.edit_text("❌ Upload failed. Please try again later.\nJoin > @PythonBotz")
         return None
-                       
+        
