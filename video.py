@@ -45,13 +45,13 @@ async def download_video(url, reply_msg, user_mention, user_id):
     url = normalize_terabox_url(url)
 
     try:
-        response = requests.get(f"http://178.62.122.48:6999/?url={url}")
+        response = requests.get(f"https://tb-b8qi.onrender.com/?url={url}")
         response.raise_for_status()
         data = response.json()
 
-        direct_link = data.get("link")
-        file_name = data.get("file_name")
-        thumbnail_url = data.get("thumb")
+        direct_link = data.get("direct_link")
+        file_name = data.get("name")
+        thumbnail_url = data.get("tumbanail")
 
         if not direct_link:
             logging.error("Direct download link not found in API response")
